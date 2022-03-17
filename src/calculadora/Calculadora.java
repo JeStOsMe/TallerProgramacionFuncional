@@ -74,7 +74,8 @@ public class Calculadora {
     }
 
     public static void multiplicar() {
-        Integer num1, num2, contador;
+        Integer num1, num2, contador, resultado;
+        boolean num1Negativo = false, num2Negativo = false, signosIguales = false;
 
         System.out.println("\n\tRestas");
         
@@ -88,7 +89,20 @@ public class Calculadora {
 
         if (num2 == null){ return; }
 
+        if( num1 < 0){
+            num1Negativo = true;
+            num1 *= -1;
+        }
+
+        if( num2 < 0){
+            num2Negativo = true;
+            num2 *= -1;
+        }
+
         contador = num2;
+
+        //Si ambos números tienen el mismo signo, se asigna verdadero
+        signosIguales = (num1Negativo == num2Negativo);
 
         operacionesMD = new OperacionesMD() {
 
@@ -103,11 +117,11 @@ public class Calculadora {
                     return acumulado;
                 }
 
-                acumulado = sumar(num1, num1);
+                acumulado = sumar(num1, 0);
 
                 contador--;
 
-                if(contador == 0 || contador == 1){
+                if(contador == 0){
                     return acumulado;
                 }
 
@@ -118,9 +132,25 @@ public class Calculadora {
             }
         };
 
+        resultado = operacionesMD.hacerOperacion(num1, num2, contador);
+
+        //Si es verdadero, el resultado será positivo. Si no, será negativo.
+        if (signosIguales){
+            resultado = Math.abs(resultado);
+        } else{
+            resultado *= -1;
+        }
+
+        if (num1Negativo){
+            num1 *= -1;
+        }
+        if (num2Negativo){
+            num2 *= -1;
+        }
+
         System.out.println("\n\n\t\t" + 
                 num1 + " * " + num2 + " = " + 
-                operacionesMD.hacerOperacion(num1, num2, contador));
+                resultado);
         
     }
 
