@@ -76,6 +76,31 @@ public class Calculadora {
     }
 
     public static void restar() {
+        Integer num1, num2;
+
+        System.out.println("\n\tRestas");
+        
+        System.out.print("\n\t\tIngrese el primer número: ");
+        num1 = verificarEntero(sc.nextLine());
+
+        if (num1 == null){ return; }
+
+        System.out.print("\n\t\tIngrese el segundo número: ");
+        num2 = verificarEntero(sc.nextLine());
+
+        if (num2 == null){ return; }
+
+        operaciones = new Operaciones() {
+
+            @Override
+            public Integer hacerOperacion(Integer num1, Integer num2) {
+                return (num1 - num2);
+            }
+        };
+
+        System.out.println("\n\n\t\t" + 
+            num1 + " - " + num2 + " = " + 
+            operaciones.hacerOperacion(num1, num2));
     }
 
     public static void sumar() {
