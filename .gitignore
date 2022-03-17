@@ -13,4 +13,4 @@ target/
 
 ### VS Code ###
 .vscode/
-.bin/
+bin/
