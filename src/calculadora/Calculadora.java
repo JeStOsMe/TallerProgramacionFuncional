@@ -1,14 +1,15 @@
 package calculadora;
 
-import java.text.ParseException;
 import java.util.Scanner;
 
-import interfaces.Operaciones;
+import interfaces.OperacionesMD;
+import interfaces.OperacionesSM;
 
 public class Calculadora {
 
     public static Scanner sc = new Scanner(System.in);
-    public static Operaciones operaciones;
+    public static OperacionesSM operacionesSM;
+    public static OperacionesMD operacionesMD;
 
     public static void main(String[] args) {
 
@@ -73,6 +74,54 @@ public class Calculadora {
     }
 
     public static void multiplicar() {
+        Integer num1, num2, contador;
+
+        System.out.println("\n\tRestas");
+        
+        System.out.print("\n\t\tIngrese el primer número: ");
+        num1 = verificarEntero(sc.nextLine());
+
+        if (num1 == null){ return; }
+
+        System.out.print("\n\t\tIngrese el segundo número: ");
+        num2 = verificarEntero(sc.nextLine());
+
+        if (num2 == null){ return; }
+
+        contador = num2;
+
+        operacionesMD = new OperacionesMD() {
+
+            @Override
+            public Integer hacerOperacion(Integer num1, Integer num2, Integer contador) {
+                Integer acumulado = num1;
+
+                if (num2 == 0){
+                    return 0;
+                }
+                if (num2 == 1){
+                    return acumulado;
+                }
+
+                acumulado = sumar(num1, num1);
+
+                contador--;
+
+                if(contador == 0 || contador == 1){
+                    return acumulado;
+                }
+
+                acumulado += hacerOperacion(num1, num2, contador);
+
+                return acumulado;
+
+            }
+        };
+
+        System.out.println("\n\n\t\t" + 
+                num1 + " * " + num2 + " = " + 
+                operacionesMD.hacerOperacion(num1, num2, contador));
+        
     }
 
     public static void restar() {
@@ -90,7 +139,7 @@ public class Calculadora {
 
         if (num2 == null){ return; }
 
-        operaciones = new Operaciones() {
+        operacionesSM = new OperacionesSM() {
 
             @Override
             public Integer hacerOperacion(Integer num1, Integer num2) {
@@ -100,7 +149,7 @@ public class Calculadora {
 
         System.out.println("\n\n\t\t" + 
             num1 + " - " + num2 + " = " + 
-            operaciones.hacerOperacion(num1, num2));
+            operacionesSM.hacerOperacion(num1, num2));
     }
 
     public static void sumar() {
@@ -118,7 +167,7 @@ public class Calculadora {
 
         if (num2 == null){ return; }
 
-        operaciones = new Operaciones() {
+        operacionesSM = new OperacionesSM() {
 
             @Override
             public Integer hacerOperacion(Integer num1, Integer num2) {
@@ -128,7 +177,37 @@ public class Calculadora {
 
         System.out.println("\n\n\t\t" + 
             num1 + " + " + num2 + " = " + 
-            operaciones.hacerOperacion(num1, num2));
+            operacionesSM.hacerOperacion(num1, num2));
+    }
+
+    public static Integer sumar(Integer num1, Integer num2) {
+        
+        operacionesSM = new OperacionesSM() {
+
+            @Override
+            public Integer hacerOperacion(Integer num1, Integer num2) {
+                if (num2 == 1){
+                    return num1;
+                } else{
+                    return (num1 + num2);
+                }
+            }
+        };
+
+        return operacionesSM.hacerOperacion(num1, num2);
+    }
+
+    public static Integer restar(Integer num1, Integer num2) {
+        
+        operacionesSM = new OperacionesSM() {
+
+            @Override
+            public Integer hacerOperacion(Integer num1, Integer num2) {
+                return (num1 - num2);
+            }
+        };
+
+        return operacionesSM.hacerOperacion(num1, num2);
     }
     
 }

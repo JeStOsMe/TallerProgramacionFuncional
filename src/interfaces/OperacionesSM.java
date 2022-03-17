@@ -1,7 +1,8 @@
 package interfaces;
 
-public interface Operaciones {
+public interface OperacionesSM {
 
     public Integer hacerOperacion(Integer num1, Integer num2);
+    
     
 }
