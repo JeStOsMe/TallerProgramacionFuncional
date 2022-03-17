@@ -101,6 +101,8 @@ public class Calculadora {
         //Si ambos números tienen el mismo signo, se asigna verdadero
         signosIguales = (num1Negativo == num2Negativo);
 
+        /* Resta num2 a num1, y suma 1 al contador. Siempre que num1 sea mayor a num2,
+        se repetirá el proceso, hasta que no se cumpla esa condición. */
         operacionesMD = new OperacionesMD() {
 
             @Override
@@ -138,6 +140,7 @@ public class Calculadora {
             resultado *= -1;
         }
 
+        //Los retorno a sus signos originales, para la correcta impresión del mensaje
         if (num1Negativo){
             num1 *= -1;
         }
@@ -150,6 +153,8 @@ public class Calculadora {
                 resultado);
     }
 
+    /* Se sumará el valor de num1 la cantidad de veces que registre num2. 
+    Hay un contador para mantener el control.*/
     public static void multiplicar() {
         Integer num1, num2, contador, resultado;
         boolean num1Negativo = false, num2Negativo = false, signosIguales = false;
@@ -217,7 +222,7 @@ public class Calculadora {
         } else{
             resultado *= -1;
         }
-
+        //Retorno sus signos originales para la correcta impresión
         if (num1Negativo){
             num1 *= -1;
         }
@@ -246,6 +251,7 @@ public class Calculadora {
 
         if (num2 == null){ return; }
 
+        //Dados los dos números ingresados arriba, retorna la resta de estos
         operacionesSM = new OperacionesSM() {
 
             @Override
@@ -274,6 +280,7 @@ public class Calculadora {
 
         if (num2 == null){ return; }
 
+        //Dados los dos números ingresados arriba, retorna la suma de estos.
         operacionesSM = new OperacionesSM() {
 
             @Override
@@ -287,6 +294,9 @@ public class Calculadora {
             operacionesSM.hacerOperacion(num1, num2));
     }
 
+    /* Retorna directamente la suma de los valores ingresados como parámetros 
+    ¿Diferencia con el otro método? Este contiene exclusivamente la operación, mientras el otro 
+    tiene un "microambiente" para registrar los números y separar obligaciones.*/
     public static Integer sumar(Integer num1, Integer num2) {
         
         operacionesSM = new OperacionesSM() {
@@ -304,6 +314,9 @@ public class Calculadora {
         return operacionesSM.hacerOperacion(num1, num2);
     }
 
+    /* Retorna directamente la resta de los valores ingresados como parámetros 
+    ¿Diferencia con el otro método? Este contiene exclusivamente la operación, mientras el otro 
+    tiene un "microambiente" para registrar los números y separar obligaciones.*/
     public static Integer restar(Integer num1, Integer num2) {
         
         operacionesSM = new OperacionesSM() {
