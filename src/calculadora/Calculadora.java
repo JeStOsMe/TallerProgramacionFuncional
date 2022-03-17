@@ -23,7 +23,7 @@ public class Calculadora {
             System.out.println("\t1. Sumar");
             System.out.println("\t2. Restar");
             System.out.println("\t3. Multiplicar");
-            System.out.println("\t4. Dividir");
+            System.out.println("\t4. Dividir (división entera)");
             System.out.println("\t5. Salir");
             System.out.print("\n\tOpción ---> ");
             
@@ -71,13 +71,90 @@ public class Calculadora {
     }
 
     public static void dividir() {
+        Integer num1, num2, contador, resultado;
+        boolean num1Negativo = false, num2Negativo = false, signosIguales = false;
+
+        System.out.println("\n\tDivisiones");
+        
+        System.out.print("\n\t\tIngrese el primer número: ");
+        num1 = verificarEntero(sc.nextLine());
+
+        if (num1 == null){ return; }
+
+        System.out.print("\n\t\tIngrese el segundo número: ");
+        num2 = verificarEntero(sc.nextLine());
+
+        if (num2 == null){ return; }
+
+        if( num1 < 0){
+            num1Negativo = true;
+            num1 *= -1;
+        }
+
+        if( num2 < 0){
+            num2Negativo = true;
+            num2 *= -1;
+        }
+
+        contador = 0;
+
+        //Si ambos números tienen el mismo signo, se asigna verdadero
+        signosIguales = (num1Negativo == num2Negativo);
+
+        operacionesMD = new OperacionesMD() {
+
+            @Override
+            public Integer hacerOperacion(Integer num1, Integer num2, Integer contador) {
+                Integer acumulado = num1;
+
+                if (num2 == 0){
+                    return 0;
+                }
+                if (num2 == 1){
+                    return acumulado;
+                }
+
+                acumulado = restar(num1, num2);
+
+                contador++;
+
+                if(acumulado < num2){
+                    return contador;
+                }
+
+                contador = hacerOperacion(acumulado, num2, contador);
+
+                return contador;
+
+            }
+        };
+
+        resultado = operacionesMD.hacerOperacion(num1, num2, contador);
+
+        //Si es verdadero, el resultado será positivo. Si no, será negativo.
+        if (signosIguales){
+            resultado = Math.abs(resultado);
+        } else{
+            resultado *= -1;
+        }
+
+        if (num1Negativo){
+            num1 *= -1;
+        }
+        if (num2Negativo){
+            num2 *= -1;
+        }
+
+        System.out.println("\n\n\t\t" + 
+                num1 + " / " + num2 + " = " + 
+                resultado);
     }
 
     public static void multiplicar() {
         Integer num1, num2, contador, resultado;
         boolean num1Negativo = false, num2Negativo = false, signosIguales = false;
 
-        System.out.println("\n\tRestas");
+        System.out.println("\n\tMultiplicaciones");
         
         System.out.print("\n\t\tIngrese el primer número: ");
         num1 = verificarEntero(sc.nextLine());
